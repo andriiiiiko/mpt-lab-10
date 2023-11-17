@@ -1,54 +1,26 @@
-# Word Count Analyzer
+# Word Count Analyzer (Variant 10)
 
 This program analyzes the frequency of words in a given text by counting the occurrences of each word and storing the 
 results in a dictionary.
 
 ## Overview
 
-The `WordCountAnalyzer` class provides methods to count the occurrences of each word in a provided text string. It 
-includes the following methods:
+This C# project involves implementing data persistence using two different approaches: binary file storage and 
+serialization/deserialization in JSON or XML format. Additionally, the implementation is further evaluated based on the 
+use of a universal class dedicated to handling data saving and restoration.
 
-### `CountWords(string text)`
+## Grading Criteria
 
-- **Description**: Counts the occurrences of each word in the given text and returns a dictionary containing each 
-unique word and its count in the text.
-- **Parameters**:
-    - `text`: The input text to be analyzed.
+### 1. Binary File Storage (3 points)
 
-### `GetWordsFromText(string text)`
+Implementing data persistence through saving and restoring data in a binary file.
 
-- **Description**: Splits the text into an array of words using specific delimiters.
-- **Parameters**:
-    - `text`: The input text to extract words from.
+### 2. JSON/XML Serialization/Deserialization (2 points)
 
-### `SanitizeWord(string word)`
+Implementing data persistence through serialization and deserialization in either JSON or XML format.
 
-- **Description**: Sanitizes the word by converting it to lowercase.
-- **Parameters**:
-    - `word`: The word to sanitize.
+### 3. Universal Data Handling Class (3 points)
 
-### `UpdateWordCount(Dictionary<string, int> wordCount, string word)`
-
-- **Description**: Updates the count of a word in the word count dictionary.
-- **Parameters**:
-    - `wordCount`: The dictionary containing word counts.
-    - `word`: The word to update the count for.
-
-## How to Use
-
-1. Create an instance of the `WordCountAnalyzer` class.
-2. Call the `CountWords(text)` method with the text you want to analyze.
-3. Receive a dictionary containing the word count results.
-
-## Example Usage
-
-```csharp
-string text = "Your text goes here...";
-WordCountAnalyzer analyzer = new WordCountAnalyzer();
-Dictionary<string, int> wordCount = analyzer.CountWords(text);
-
-// Display the word count results
-foreach (var pair in wordCount)
-{
-    Console.WriteLine($"The word '{pair.Key}' occurs {pair.Value} time(s)");
-}
+An additional evaluation criterion is the implementation of the above operations using a universal class dedicated to 
+data saving and restoration. This class should accept the list to be saved as an object input, rather than just adding 
+two extra methods to the main class that works with the list.
