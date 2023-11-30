@@ -30,14 +30,14 @@ public class WordCounter
         WordCountData loadedDataBinary = dataSaver.LoadBinary("wordCountData.bin");
 
         // Load from JSON file
-        WordCountData loadedDataJson = jsonSerializer.DeserializeFromJson("wordCountData.json");
+        WordCountData? loadedDataJson = jsonSerializer.DeserializeFromJson("wordCountData.json");
 
         // Display loaded data
         Console.WriteLine("\nLoaded Data from Binary File:\n");
         DisplayWordCount(loadedDataBinary.WordCount);
 
         Console.WriteLine("\nLoaded Data from JSON File:\n");
-        DisplayWordCount(loadedDataJson.WordCount);
+        if (loadedDataJson != null) DisplayWordCount(loadedDataJson.WordCount);
 
         // Sort and display sorted data
         Console.WriteLine("\nSorted Words:\n");
@@ -49,6 +49,22 @@ public class WordCounter
         // Filter and display filtered data
         Console.WriteLine("\nFiltered Words (length > 3):\n");
         DisplayWordCount(analyzer.FilterWords(loadedDataBinary.WordCount, pair => pair.Key.Length > 3));
+        
+        
+        int arraySize = 1000000;
+        int minValue = 0;
+        int maxValue = 10000;
+        int numThreads = 4;
+
+        int[] arrayToFill = new int[arraySize];
+        ParallelArrayProcessor.FillArrayInParallel(arrayToFill, minValue, maxValue, numThreads);
+
+        // Measure and compare the time for sorting with different numbers of threads
+        Console.WriteLine("Sorting with 1 thread:");
+        MeasureAndDisplaySortingTime(arrayToFill, 1);
+
+        Console.WriteLine("Sorting with 4 threads:");
+        MeasureAndDisplaySortingTime(arrayToFill, 4);
     }
 
     /// <summary>
@@ -85,5 +101,21 @@ public class WordCounter
         {
             Console.WriteLine($"The word '{pair.Key}' occurs {pair.Value} time(s)");
         }
+    }
+    
+    /// <summary>
+    /// Measures and displays the sorting time for the specified array with a specified number of threads.
+    /// </summary>
+    /// <param name="arrayToSort">The array to be sorted.</param>
+    /// <param name="numThreads">The number of parallel threads for sorting.</param>
+    private static void MeasureAndDisplaySortingTime(int[] arrayToSort, int numThreads)
+    {
+        int[] arrayToSortCopy = arrayToSort.ToArray(); // Create a copy for fair comparison
+
+        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+        ParallelArrayProcessor.ParallelSort(arrayToSortCopy, numThreads);
+        stopwatch.Stop();
+
+        Console.WriteLine($"Sorting time with {numThreads} threads: {stopwatch.ElapsedMilliseconds} ms");
     }
 }

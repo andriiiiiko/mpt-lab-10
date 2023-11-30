@@ -1,5 +1,4 @@
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text.Json;
 
 namespace mpt_lab_7;
 
@@ -13,6 +12,7 @@ public class DataSaver
     /// </summary>
     /// <param name="fileName">The name of the file to save the binary data to.</param>
     /// <param name="data">The WordCountData to be serialized and saved.</param>
+    [Obsolete("Obsolete")]
     public void SaveBinary(string fileName, WordCountData data)
     {
         BinaryFormatter formatter = new BinaryFormatter();
@@ -25,6 +25,7 @@ public class DataSaver
     /// </summary>
     /// <param name="fileName">The name of the file containing the binary data.</param>
     /// <returns>The deserialized WordCountData object.</returns>
+    [Obsolete("Obsolete")]
     public WordCountData LoadBinary(string fileName)
     {
         WordCountData data;

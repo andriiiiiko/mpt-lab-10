@@ -1,5 +1,3 @@
-using System.Text.Json;
-
 namespace mpt_lab_7;
 
 /// <summary>
@@ -14,7 +12,7 @@ public class JsonSerializer
     /// <param name="data">The WordCountData to be serialized and saved.</param>
     public void SerializeToJson(string fileName, WordCountData data)
     {
-        string json = JsonSerializer.Serialize(data);
+        string json = System.Text.Json.JsonSerializer.Serialize(data);
         File.WriteAllText(fileName, json);
     }
 
@@ -23,9 +21,9 @@ public class JsonSerializer
     /// </summary>
     /// <param name="fileName">The name of the file containing the JSON data.</param>
     /// <returns>The deserialized WordCountData object.</returns>
-    public WordCountData DeserializeFromJson(string fileName)
+    public WordCountData? DeserializeFromJson(string fileName)
     {
         string json = File.ReadAllText(fileName);
-        return JsonSerializer.Deserialize<WordCountData>(json);
+        return System.Text.Json.JsonSerializer.Deserialize<WordCountData>(json);
     }
 }
